@@ -1,0 +1,586 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+.dashboard-root {
+  position: fixed;
+  inset: 104px 28px 28px;
+  z-index: 920;
+  pointer-events: auto;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 16px;
+  color: rgba(228, 248, 250, 0.92);
+  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+}
+
+.dashboard-hero,
+.dashboard-panel,
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(3, 10, 17, 0.92), rgba(9, 18, 28, 0.78)),
+    linear-gradient(90deg, rgba(0, 255, 225, 0.08), transparent 54%, rgba(245, 166, 35, 0.05));
+  border: 1px solid rgba(121, 222, 229, 0.2);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(18px) saturate(1.2);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+.dashboard-hero {
+  min-height: 92px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.dashboard-hero::before,
+.dashboard-panel::before,
+.metric-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0 9%, rgba(0, 255, 225, 0.13) 9.2% 9.45%, transparent 9.7% 100%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 7px);
+  opacity: 0.34;
+}
+
+.dashboard-hero::after,
+.dashboard-panel::after,
+.metric-card::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  border: 1px solid rgba(0, 255, 225, 0.11);
+  clip-path: polygon(0 0, 54px 0, 54px 1px, 1px 1px, 1px 54px, 0 54px, 0 0, 100% 0, 100% 54px, calc(100% - 1px) 54px, calc(100% - 1px) 1px, calc(100% - 54px) 1px, calc(100% - 54px) 0, 100% 0, 100% 100%, calc(100% - 54px) 100%, calc(100% - 54px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 54px), 100% calc(100% - 54px), 100% 100%, 0 100%, 0 calc(100% - 54px), 1px calc(100% - 54px), 1px calc(100% - 1px), 54px calc(100% - 1px), 54px 100%, 0 100%);
+}
+
+.dash-kicker,
+.dashboard-panel-title,
+.metric-card span {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.dash-kicker {
+  color: rgba(0, 255, 225, 0.66);
+  font-size: 10px;
+}
+
+.dashboard-hero h1 {
+  margin: 6px 0 0;
+  color: #f4ffff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 22px rgba(0, 255, 225, 0.34), 0 0 42px rgba(245, 166, 35, 0.12);
+}
+
+.dashboard-sensor-stack {
+  flex: 1;
+  max-width: 340px;
+  min-width: 180px;
+  display: grid;
+  gap: 7px;
+}
+
+.dashboard-sensor-stack span {
+  height: 4px;
+  background:
+    linear-gradient(90deg, rgba(0, 255, 225, 0.06), rgba(0, 255, 225, 0.7), rgba(245, 166, 35, 0.36), transparent);
+  box-shadow: 0 0 14px rgba(0, 255, 225, 0.18);
+  transform-origin: left;
+  animation: sensor-sweep 2.8s ease-in-out infinite;
+}
+
+.dashboard-sensor-stack span:nth-child(2) { width: 78%; animation-delay: 0.16s; }
+.dashboard-sensor-stack span:nth-child(3) { width: 58%; animation-delay: 0.32s; }
+.dashboard-sensor-stack span:nth-child(4) { width: 86%; animation-delay: 0.48s; }
+
+@keyframes sensor-sweep {
+  0%, 100% { transform: scaleX(0.34); opacity: 0.36; }
+  45% { transform: scaleX(1); opacity: 0.95; }
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.dashboard-actions button,
+.dash-pill,
+.dash-delete {
+  min-height: 30px;
+  border: 1px solid rgba(0, 255, 225, 0.28);
+  background: rgba(0, 255, 225, 0.075);
+  color: rgba(235, 255, 255, 0.86);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-actions button:hover,
+.dash-pill:hover,
+.dash-delete:hover {
+  border-color: rgba(0, 255, 225, 0.62);
+  background:
+    linear-gradient(90deg, rgba(0, 255, 225, 0.18), rgba(245, 166, 35, 0.08)),
+    rgba(0, 0, 0, 0.24);
+  color: #f4ffff;
+  box-shadow: 0 0 18px rgba(0, 255, 225, 0.14), inset 0 0 18px rgba(0, 255, 225, 0.05);
+}
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric-card {
+  min-height: 74px;
+  padding: 14px;
+  text-align: left;
+}
+
+.metric-card span {
+  display: block;
+  color: rgba(180, 225, 229, 0.56);
+  font-size: 8px;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 10px;
+  color: #eaffff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  text-shadow: 0 0 14px rgba(0, 255, 225, 0.18);
+}
+
+.dashboard-grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  grid-auto-rows: minmax(210px, 1fr);
+  gap: 14px;
+}
+
+.dashboard-panel {
+  min-height: 0;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.response-wide {
+  grid-column: span 2;
+}
+
+.dashboard-panel-title {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 255, 225, 0.14);
+  color: rgba(0, 255, 225, 0.74);
+  font-size: 10px;
+  text-align: left;
+}
+
+.dashboard-response {
+  margin: 0;
+  color: rgba(235, 250, 247, 0.9);
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+.dashboard-empty {
+  margin: 0;
+  color: rgba(180, 225, 229, 0.48);
+  font-style: italic;
+  text-align: left;
+}
+
+.dashboard-list {
+  overflow: auto;
+  min-height: 0;
+  display: grid;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: start;
+  padding: 10px;
+  border: 1px solid rgba(137, 228, 234, 0.1);
+  background: rgba(0, 0, 0, 0.18);
+  text-align: left;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard-row:hover {
+  border-color: rgba(0, 255, 225, 0.28);
+  background: rgba(0, 255, 225, 0.045);
+  transform: translateX(2px);
+}
+
+.dashboard-row.done {
+  opacity: 0.48;
+}
+
+.dashboard-row-main p {
+  margin: 0 0 4px;
+  color: rgba(231, 248, 248, 0.9);
+  line-height: 1.45;
+}
+
+.dashboard-row-main span {
+  color: rgba(180, 225, 229, 0.5);
+  font-size: 10px;
+}
+
+.dash-pill {
+  min-height: 24px;
+  font-size: 7px;
+}
+
+.dash-delete {
+  min-width: 24px;
+  min-height: 24px;
+  border-color: rgba(255, 120, 100, 0.3);
+  background: rgba(255, 80, 60, 0.07);
+  color: #ffb4a8;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-root {
+    overflow-y: auto;
+  }
+
+  .dashboard-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .dashboard-root {
+    inset: 132px 12px 14px;
+  }
+
+  .dashboard-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-sensor-stack {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-metrics,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .response-wide {
+    grid-column: auto;
+  }
+}
+
+/* Final dashboard proportion pass */
+.dashboard-root {
+  inset: 104px 28px 24px;
+  gap: 12px;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.dashboard-hero {
+  min-height: 74px;
+  padding: 14px 18px;
+}
+
+.dashboard-hero h1 {
+  font-size: clamp(20px, 2vw, 24px);
+  margin-top: 4px;
+}
+
+.dash-kicker {
+  font-size: 8px;
+}
+
+.dashboard-sensor-stack {
+  max-width: 260px;
+  gap: 5px;
+}
+
+.dashboard-sensor-stack span {
+  height: 3px;
+}
+
+.dashboard-actions button {
+  min-height: 28px;
+  padding: 0 10px;
+}
+
+.dashboard-metrics {
+  gap: 10px;
+}
+
+.metric-card {
+  min-height: 56px;
+  padding: 10px 12px;
+}
+
+.metric-card strong {
+  margin-top: 7px;
+  font-size: 12px;
+}
+
+.dashboard-grid {
+  grid-auto-rows: minmax(150px, 1fr);
+  gap: 12px;
+}
+
+.dashboard-panel {
+  padding: 11px;
+}
+
+.dashboard-panel-title {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  font-size: 8px;
+}
+
+.dashboard-response {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.dashboard-row {
+  padding: 8px;
+  gap: 8px;
+}
+
+.dashboard-row-main p {
+  font-size: 12px;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-root {
+    inset: 96px 18px 18px;
+  }
+
+  .dashboard-grid {
+    grid-auto-rows: minmax(145px, auto);
+  }
+}
+
+@media (max-width: 760px) {
+  .dashboard-root {
+    inset: 128px 12px 14px;
+    gap: 10px;
+  }
+
+  .dashboard-hero {
+    min-height: 0;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .dashboard-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboard-grid {
+    grid-auto-rows: minmax(138px, auto);
+  }
+}
+
+/* Neon compact dashboard pass */
+.dashboard-panel,
+.dashboard-panel:hover,
+.metric-card,
+.metric-card:hover,
+.dashboard-row,
+.dashboard-row:hover,
+.dashboard-actions button:hover,
+.dash-pill:hover,
+.dash-delete:hover {
+  transform: none !important;
+}
+
+.dashboard-root {
+  gap: 10px;
+}
+
+.dashboard-hero,
+.dashboard-panel,
+.metric-card {
+  background:
+    linear-gradient(145deg, rgba(11, 18, 32, 0.94), rgba(8, 13, 26, 0.84)),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.06), transparent 54%, rgba(255, 61, 242, 0.052));
+  border-color: rgba(0, 245, 255, 0.22);
+  border-radius: 10px;
+  clip-path: none;
+}
+
+.dashboard-hero::before,
+.dashboard-panel::before,
+.metric-card::before {
+  background:
+    linear-gradient(90deg, transparent 0 9%, rgba(0, 245, 255, 0.11) 9.2% 9.45%, transparent 9.7% 100%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 7px);
+}
+
+.dashboard-hero::after,
+.dashboard-panel::after,
+.metric-card::after {
+  border-color: rgba(0, 245, 255, 0.1);
+  border-radius: 8px;
+  clip-path: none;
+}
+
+.dash-kicker,
+.dashboard-panel-title {
+  color: rgba(0, 245, 255, 0.76);
+}
+
+.dashboard-hero h1,
+.metric-card strong {
+  color: #eefcff;
+  text-shadow: 0 0 18px rgba(0, 245, 255, 0.22), 0 0 34px rgba(255, 61, 242, 0.1);
+}
+
+.dashboard-sensor-stack span {
+  background:
+    linear-gradient(90deg, rgba(0, 245, 255, 0.06), rgba(0, 245, 255, 0.72), rgba(255, 61, 242, 0.36), transparent);
+  box-shadow: 0 0 14px rgba(0, 245, 255, 0.18);
+}
+
+.dashboard-actions button,
+.dash-pill,
+.dash-delete {
+  border-color: rgba(0, 245, 255, 0.26);
+  background: rgba(0, 245, 255, 0.065);
+  clip-path: none;
+  border-radius: 8px;
+}
+
+.dashboard-actions button:hover,
+.dash-pill:hover,
+.dash-delete:hover {
+  border-color: rgba(0, 245, 255, 0.58);
+  background:
+    linear-gradient(90deg, rgba(0, 245, 255, 0.16), rgba(255, 61, 242, 0.08)),
+    rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 16px rgba(0, 245, 255, 0.13), inset 0 0 16px rgba(182, 92, 255, 0.045);
+}
+
+.metric-card {
+  min-height: 48px;
+  padding: 9px 10px;
+}
+
+.dashboard-grid {
+  grid-auto-rows: minmax(125px, 1fr);
+  gap: 10px;
+}
+
+.dashboard-panel {
+  padding: 9px;
+}
+
+.dashboard-row {
+  border-color: rgba(0, 245, 255, 0.1);
+  background: rgba(0, 0, 0, 0.16);
+  clip-path: none;
+  border-radius: 8px;
+}
+
+.dashboard-row:hover {
+  border-color: rgba(0, 245, 255, 0.24);
+  background: rgba(0, 245, 255, 0.035);
+}
+
+/* Amber color restore for dashboard only. */
+.dashboard-hero,
+.dashboard-panel,
+.metric-card {
+  background:
+    linear-gradient(145deg, rgba(22, 25, 32, 0.94), rgba(18, 20, 26, 0.84)),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.055), transparent 54%, rgba(146, 64, 14, 0.055));
+  border-color: rgba(245, 158, 11, 0.22);
+}
+
+.dashboard-hero::before,
+.dashboard-panel::before,
+.metric-card::before {
+  background:
+    linear-gradient(90deg, transparent 0 9%, rgba(245, 158, 11, 0.11) 9.2% 9.45%, transparent 9.7% 100%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 7px);
+}
+
+.dashboard-hero::after,
+.dashboard-panel::after,
+.metric-card::after {
+  border-color: rgba(245, 158, 11, 0.1);
+}
+
+.dash-kicker,
+.dashboard-panel-title {
+  color: rgba(245, 158, 11, 0.76);
+}
+
+.dashboard-hero h1,
+.metric-card strong {
+  text-shadow: 0 0 18px rgba(245, 158, 11, 0.22), 0 0 34px rgba(146, 64, 14, 0.1);
+}
+
+.dashboard-sensor-stack span {
+  background:
+    linear-gradient(90deg, rgba(245, 158, 11, 0.06), rgba(245, 158, 11, 0.72), rgba(251, 191, 36, 0.36), transparent);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.18);
+}
+
+.dashboard-actions button,
+.dash-pill,
+.dash-delete {
+  border-color: rgba(245, 158, 11, 0.26);
+  background: rgba(245, 158, 11, 0.065);
+}
+
+.dashboard-actions button:hover,
+.dash-pill:hover,
+.dash-delete:hover {
+  border-color: rgba(245, 158, 11, 0.58);
+  background:
+    linear-gradient(90deg, rgba(245, 158, 11, 0.16), rgba(146, 64, 14, 0.08)),
+    rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.13), inset 0 0 16px rgba(245, 158, 11, 0.045);
+}
+
+.dashboard-row {
+  border-color: rgba(245, 158, 11, 0.1);
+}
+
+.dashboard-row:hover {
+  border-color: rgba(245, 158, 11, 0.24);
+  background: rgba(245, 158, 11, 0.035);
+}

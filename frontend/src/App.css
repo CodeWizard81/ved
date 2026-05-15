@@ -1,0 +1,749 @@
+.App {
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 43% 54%, rgba(0, 255, 225, 0.16) 0%, rgba(0, 255, 225, 0.04) 25%, transparent 47%),
+    radial-gradient(ellipse at 16% 22%, rgba(67, 128, 255, 0.12), transparent 36%),
+    radial-gradient(ellipse at 86% 78%, rgba(245, 166, 35, 0.12), transparent 34%),
+    linear-gradient(120deg, #02070d 0%, #06101a 31%, #090f18 56%, #02050a 100%);
+  min-height: 100vh;
+  transition: background 0.8s ease-in-out;
+  animation: bg-settle 1.2s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  --cursor-x: 50%;
+  --cursor-y: 50%;
+}
+
+.robotic-ui {
+  cursor: crosshair;
+}
+
+.privacy-consent {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(2, 6, 14, 0.78);
+  backdrop-filter: blur(16px);
+  z-index: 5000;
+}
+
+.privacy-consent-panel {
+  width: min(560px, 100%);
+  padding: 28px;
+  border: 1px solid rgba(0, 255, 225, 0.38);
+  border-radius: 8px;
+  background: rgba(5, 12, 24, 0.92);
+  box-shadow: 0 0 30px rgba(0, 255, 225, 0.14);
+  color: rgba(235, 250, 255, 0.92);
+  text-align: left;
+}
+
+.privacy-consent-panel h1 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: #00ffe1;
+}
+
+.privacy-consent-panel p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.privacy-consent-actions {
+  margin-top: 22px;
+}
+
+.privacy-consent-actions button {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #00ffe1;
+  border-radius: 6px;
+  background: rgba(0, 255, 225, 0.14);
+  color: #eaffff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.privacy-consent-actions button:hover {
+  background: rgba(0, 255, 225, 0.24);
+}
+
+.App.alt-mode {
+  background:
+    radial-gradient(ellipse at 43% 54%, rgba(255, 91, 28, 0.16) 0%, rgba(255, 91, 28, 0.04) 25%, transparent 47%),
+    radial-gradient(ellipse at 16% 22%, rgba(0, 255, 225, 0.1), transparent 36%),
+    radial-gradient(ellipse at 86% 78%, rgba(255, 190, 70, 0.13), transparent 34%),
+    linear-gradient(120deg, #050507 0%, #120a08 34%, #090d14 62%, #02050a 100%);
+  animation: bg-settle-alt 1.2s ease-out forwards;
+}
+
+.App::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(115deg, transparent 0 19%, rgba(0, 255, 225, 0.1) 19.2% 19.45%, transparent 19.7% 48%, rgba(245, 166, 35, 0.12) 48.2% 48.45%, transparent 48.7% 100%),
+    linear-gradient(245deg, transparent 0 31%, rgba(0, 255, 225, 0.08) 31.2% 31.45%, transparent 31.7% 100%),
+    radial-gradient(circle at 42% 50%, rgba(0, 255, 225, 0.2), transparent 22%),
+    radial-gradient(circle at 86% 15%, rgba(245, 166, 35, 0.12), transparent 24%),
+    linear-gradient(90deg, rgba(3, 8, 18, 0.84) 0%, rgba(3, 8, 18, 0.18) 46%, rgba(3, 8, 18, 0.88) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.22) 42%, rgba(0, 0, 0, 0.74));
+}
+
+.App::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.34;
+  background:
+    linear-gradient(rgba(0, 255, 225, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 225, 0.045) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px);
+  background-size: 72px 72px, 72px 72px, 100% 4px;
+  mask-image: radial-gradient(circle at 44% 52%, black 0%, black 54%, transparent 88%);
+}
+
+.robotic-target-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(0, 255, 225, 0.13), transparent 13%),
+    linear-gradient(90deg, transparent 0 49.96%, rgba(0, 255, 225, 0.12) 49.98% 50.02%, transparent 50.04% 100%),
+    linear-gradient(0deg, transparent 0 49.96%, rgba(0, 255, 225, 0.09) 49.98% 50.02%, transparent 50.04% 100%);
+  opacity: 0.72;
+}
+
+.robotic-target-layer::before,
+.robotic-target-layer::after {
+  content: '';
+  position: absolute;
+  inset: 92px 28px 28px;
+  border: 1px solid rgba(0, 255, 225, 0.16);
+  clip-path: polygon(0 0, 130px 0, 130px 1px, 1px 1px, 1px 130px, 0 130px, 0 0, 100% 0, 100% 130px, calc(100% - 1px) 130px, calc(100% - 1px) 1px, calc(100% - 130px) 1px, calc(100% - 130px) 0, 100% 0, 100% 100%, calc(100% - 130px) 100%, calc(100% - 130px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 130px), 100% calc(100% - 130px), 100% 100%, 0 100%, 0 calc(100% - 130px), 1px calc(100% - 130px), 1px calc(100% - 1px), 130px calc(100% - 1px), 130px 100%, 0 100%);
+}
+
+.robotic-target-layer::after {
+  inset: 118px 54px 54px;
+  opacity: 0.42;
+  transform: skewX(-8deg);
+}
+
+.robotic-crosshair {
+  position: absolute;
+  left: var(--cursor-x);
+  top: var(--cursor-y);
+  width: 86px;
+  height: 86px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(0, 255, 225, 0.38);
+  border-radius: 50%;
+  box-shadow: 0 0 22px rgba(0, 255, 225, 0.12), inset 0 0 24px rgba(0, 255, 225, 0.08);
+  animation: robotic-reticle 3.6s linear infinite;
+}
+
+.robotic-crosshair::before,
+.robotic-crosshair::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 255, 225, 0.46);
+}
+
+.robotic-crosshair::before {
+  left: 50%;
+  top: -12px;
+  bottom: -12px;
+  width: 1px;
+}
+
+.robotic-crosshair::after {
+  top: 50%;
+  left: -12px;
+  right: -12px;
+  height: 1px;
+}
+
+.robotic-corner {
+  position: fixed;
+  width: 54px;
+  height: 54px;
+  border-color: rgba(245, 166, 35, 0.5);
+  border-style: solid;
+}
+
+.robotic-corner-tl { top: 108px; left: 30px; border-width: 2px 0 0 2px; }
+.robotic-corner-tr { top: 108px; right: 30px; border-width: 2px 2px 0 0; }
+.robotic-corner-bl { bottom: 30px; left: 30px; border-width: 0 0 2px 2px; }
+.robotic-corner-br { bottom: 30px; right: 30px; border-width: 0 2px 2px 0; }
+
+@keyframes robotic-reticle {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.App .orb-stage::before {
+  background:
+    repeating-conic-gradient(from 18deg, rgba(0, 255, 225, 0.16) 0deg 1deg, transparent 1deg 18deg),
+    radial-gradient(circle, transparent 0 61%, rgba(0, 255, 225, 0.11) 62% 63%, transparent 64%);
+}
+
+.App .orb-stage::after {
+  box-shadow:
+    0 0 70px rgba(0, 255, 225, 0.08),
+    inset 0 0 90px rgba(245, 166, 35, 0.04);
+}
+
+.App.alt-mode .orb-stage::before {
+  border-color: rgba(255, 120, 54, 0.32);
+  background:
+    repeating-conic-gradient(from 18deg, rgba(255, 120, 54, 0.16) 0deg 1deg, transparent 1deg 18deg),
+    radial-gradient(circle, transparent 0 61%, rgba(255, 120, 54, 0.11) 62% 63%, transparent 64%);
+}
+
+.orb-stage {
+  z-index: 4;
+}
+
+.orb-stage::before,
+.orb-stage::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  left: calc(42% - 280px);
+  top: calc(50% - 280px);
+  width: 560px;
+  height: 560px;
+  z-index: 0;
+}
+
+.orb-stage::before {
+  border: 1px solid rgba(0, 255, 225, 0.24);
+  box-shadow:
+    0 0 80px rgba(0, 255, 225, 0.1),
+    inset 0 0 80px rgba(0, 255, 225, 0.06);
+}
+
+.orb-stage::after {
+  width: 690px;
+  height: 690px;
+  left: calc(42% - 345px);
+  top: calc(50% - 345px);
+  border: 1px dashed rgba(245, 166, 35, 0.2);
+  animation: hud-orbit 28s linear infinite;
+}
+
+.voice-orb-shell {
+  filter: drop-shadow(0 0 44px rgba(0, 255, 225, 0.26)) drop-shadow(0 0 90px rgba(245, 166, 35, 0.14));
+}
+
+.voice-orb-shell::before,
+.voice-orb-shell::after {
+  content: '';
+  position: absolute;
+  inset: -34px;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.voice-orb-shell::before {
+  border: 1px solid rgba(0, 255, 225, 0.34);
+  background:
+    conic-gradient(from 90deg, transparent 0 12%, rgba(0, 255, 225, 0.44) 12% 14%, transparent 14% 38%, rgba(245, 166, 35, 0.5) 38% 40%, transparent 40% 69%, rgba(0, 255, 225, 0.42) 69% 71%, transparent 71% 100%);
+  mask: radial-gradient(circle, transparent 0 64%, #000 65% 70%, transparent 71%);
+  animation: hud-orbit 18s linear infinite;
+}
+
+.voice-orb-shell::after {
+  inset: -72px;
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  mask-image: linear-gradient(110deg, transparent 0 18%, black 26% 76%, transparent 88%);
+}
+
+@keyframes hud-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bg-settle {
+  from { transform: scale(1.05); filter: brightness(0.5); }
+  to { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes bg-settle-alt {
+  from { transform: scale(1.05); filter: brightness(0.5); }
+  to { transform: scale(1); filter: brightness(1); }
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background: transparent;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .robotic-target-layer {
+    opacity: 0.42;
+  }
+
+  .robotic-crosshair,
+  .robotic-corner {
+    display: none;
+  }
+
+  .orb-stage::before,
+  .orb-stage::after {
+    display: none;
+  }
+
+  .voice-orb-shell {
+    transform: scale(0.72);
+    transform-origin: center;
+  }
+}
+
+/* Robotic assistant interaction pass */
+.robotic-ui::selection {
+  background: rgba(0, 255, 225, 0.28);
+  color: #f4ffff;
+}
+
+.robotic-ui button,
+.robotic-ui a,
+.robotic-ui input,
+.robotic-ui [role='button'] {
+  cursor: crosshair;
+}
+
+.robotic-ui button {
+  position: relative;
+  overflow: hidden;
+}
+
+.robotic-ui button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(110deg, transparent 0 34%, rgba(255, 255, 255, 0.2) 46%, transparent 58%),
+    linear-gradient(90deg, rgba(0, 255, 225, 0.08), transparent 54%, rgba(245, 166, 35, 0.06));
+  opacity: 0;
+  transform: translateX(-65%);
+  transition: opacity 0.18s ease, transform 0.32s ease;
+}
+
+.robotic-ui button:hover::before {
+  opacity: 1;
+  transform: translateX(65%);
+}
+
+.robotic-ui button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.robotic-ui .terminal-root,
+.robotic-ui .dashboard-panel,
+.robotic-ui .dashboard-hero,
+.robotic-ui .metric-card,
+.robotic-ui .settings-panel {
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.robotic-ui .terminal-root:hover,
+.robotic-ui .dashboard-panel:hover,
+.robotic-ui .metric-card:hover,
+.robotic-ui .settings-panel:hover {
+  border-color: rgba(0, 255, 225, 0.48);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 225, 0.08),
+    0 24px 88px rgba(0, 0, 0, 0.54),
+    0 0 38px rgba(0, 255, 225, 0.12),
+    inset 0 0 54px rgba(0, 255, 225, 0.04);
+  filter: saturate(1.12);
+}
+
+/* Jarvis home identity pass */
+.App.robotic-ui {
+  --jarvis-bg-primary: #0a0b0f;
+  --jarvis-bg-secondary: #12141a;
+  --jarvis-bg-tertiary: #1a1d26;
+  --jarvis-bg-card: #161920;
+  --jarvis-bg-hover: #1e222c;
+  --jarvis-accent: #f59e0b;
+  --jarvis-accent-bright: #fbbf24;
+  --jarvis-accent-muted: #92400e;
+  --jarvis-text: #f4f4f5;
+  --jarvis-text-secondary: #a1a1aa;
+  --jarvis-text-muted: #71717a;
+  --jarvis-border: #27272a;
+  background:
+    radial-gradient(circle at 42% 48%, rgba(245, 158, 11, 0.13), transparent 28%),
+    radial-gradient(circle at 78% 22%, rgba(251, 191, 36, 0.07), transparent 26%),
+    linear-gradient(135deg, #0a0b0f 0%, #101218 46%, #07080c 100%);
+}
+
+.App.robotic-ui::before {
+  background:
+    linear-gradient(115deg, transparent 0 20%, rgba(245, 158, 11, 0.12) 20.15% 20.36%, transparent 20.6% 52%, rgba(146, 64, 14, 0.16) 52.2% 52.45%, transparent 52.7% 100%),
+    radial-gradient(circle at 42% 50%, rgba(245, 158, 11, 0.12), transparent 24%),
+    linear-gradient(90deg, rgba(10, 11, 15, 0.92) 0%, rgba(10, 11, 15, 0.18) 46%, rgba(10, 11, 15, 0.92) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.22) 42%, rgba(0, 0, 0, 0.76));
+}
+
+.App.robotic-ui::after {
+  opacity: 0.26;
+  background:
+    linear-gradient(rgba(245, 158, 11, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.032) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+  background-size: 64px 64px, 64px 64px, 100% 4px;
+}
+
+.App.robotic-ui .robotic-target-layer {
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(245, 158, 11, 0.1), transparent 13%),
+    linear-gradient(90deg, transparent 0 49.97%, rgba(245, 158, 11, 0.08) 49.99% 50.01%, transparent 50.03% 100%),
+    linear-gradient(0deg, transparent 0 49.97%, rgba(245, 158, 11, 0.06) 49.99% 50.01%, transparent 50.03% 100%);
+  opacity: 0.54;
+}
+
+.App.robotic-ui .robotic-target-layer::before,
+.App.robotic-ui .robotic-target-layer::after {
+  border-color: rgba(245, 158, 11, 0.12);
+}
+
+.App.robotic-ui .robotic-crosshair {
+  border-color: rgba(245, 158, 11, 0.34);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.12), inset 0 0 24px rgba(245, 158, 11, 0.07);
+}
+
+.App.robotic-ui .robotic-crosshair::before,
+.App.robotic-ui .robotic-crosshair::after {
+  background: rgba(245, 158, 11, 0.42);
+}
+
+.App.robotic-ui .robotic-corner {
+  border-color: rgba(251, 191, 36, 0.42);
+}
+
+.App.robotic-ui .orb-stage::before {
+  border-color: rgba(245, 158, 11, 0.22);
+  background:
+    repeating-conic-gradient(from 18deg, rgba(245, 158, 11, 0.13) 0deg 1deg, transparent 1deg 18deg),
+    radial-gradient(circle, transparent 0 61%, rgba(245, 158, 11, 0.09) 62% 63%, transparent 64%);
+}
+
+.App.robotic-ui .orb-stage::after {
+  border-color: rgba(251, 191, 36, 0.16);
+}
+
+.App.robotic-ui .voice-orb-shell {
+  filter: drop-shadow(0 0 44px rgba(245, 158, 11, 0.22)) drop-shadow(0 0 90px rgba(251, 191, 36, 0.1));
+}
+
+.App.robotic-ui .voice-orb-shell::before {
+  border-color: rgba(245, 158, 11, 0.28);
+  background:
+    conic-gradient(from 90deg, transparent 0 12%, rgba(245, 158, 11, 0.42) 12% 14%, transparent 14% 38%, rgba(251, 191, 36, 0.5) 38% 40%, transparent 40% 69%, rgba(245, 158, 11, 0.38) 69% 71%, transparent 71% 100%);
+}
+
+.App.robotic-ui .voice-orb-shell::after {
+  border-color: rgba(146, 64, 14, 0.28);
+}
+
+.App.robotic-ui button::before {
+  background:
+    linear-gradient(110deg, transparent 0 34%, rgba(255, 255, 255, 0.16) 46%, transparent 58%),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent 54%, rgba(251, 191, 36, 0.06));
+}
+
+.App.robotic-ui .terminal-root:hover,
+.App.robotic-ui .dashboard-panel:hover,
+.App.robotic-ui .metric-card:hover,
+.App.robotic-ui .settings-panel:hover {
+  border-color: rgba(245, 158, 11, 0.48);
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.08),
+    0 24px 88px rgba(0, 0, 0, 0.54),
+    0 0 38px rgba(245, 158, 11, 0.12),
+    inset 0 0 54px rgba(245, 158, 11, 0.04);
+}
+
+/* Neon compact stability pass */
+html,
+body,
+#root {
+  overflow-x: hidden;
+}
+
+.App.robotic-ui {
+  --jarvis-accent: #00f5ff;
+  --jarvis-accent-bright: #7afcff;
+  --jarvis-accent-muted: #b65cff;
+  --neon-cyan: #00f5ff;
+  --neon-blue: #006dff;
+  --neon-violet: #b65cff;
+  --neon-pink: #ff3df2;
+  --neon-bg: #050912;
+  --neon-panel: #0b1220;
+  --neon-card: #101827;
+  --neon-border: rgba(0, 245, 255, 0.28);
+  --neon-text: #eefcff;
+  --neon-muted: #7c94a8;
+  background:
+    radial-gradient(circle at 42% 48%, rgba(0, 245, 255, 0.16), transparent 26%),
+    radial-gradient(circle at 78% 22%, rgba(182, 92, 255, 0.13), transparent 25%),
+    radial-gradient(circle at 18% 80%, rgba(0, 109, 255, 0.12), transparent 28%),
+    linear-gradient(135deg, #050912 0%, #07111f 48%, #03060d 100%);
+}
+
+.App.robotic-ui::before {
+  background:
+    linear-gradient(115deg, transparent 0 20%, rgba(0, 245, 255, 0.14) 20.15% 20.36%, transparent 20.6% 52%, rgba(255, 61, 242, 0.12) 52.2% 52.45%, transparent 52.7% 100%),
+    radial-gradient(circle at 42% 50%, rgba(0, 245, 255, 0.14), transparent 22%),
+    linear-gradient(90deg, rgba(5, 9, 18, 0.94) 0%, rgba(5, 9, 18, 0.18) 46%, rgba(5, 9, 18, 0.94) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.22) 42%, rgba(0, 0, 0, 0.78));
+}
+
+.App.robotic-ui::after {
+  background:
+    linear-gradient(rgba(0, 245, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.035) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+}
+
+.App.robotic-ui .robotic-target-layer {
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(0, 245, 255, 0.14), transparent 12%),
+    linear-gradient(90deg, transparent 0 49.97%, rgba(0, 245, 255, 0.08) 49.99% 50.01%, transparent 50.03% 100%),
+    linear-gradient(0deg, transparent 0 49.97%, rgba(182, 92, 255, 0.07) 49.99% 50.01%, transparent 50.03% 100%);
+}
+
+.App.robotic-ui .robotic-target-layer::before,
+.App.robotic-ui .robotic-target-layer::after {
+  border-color: rgba(0, 245, 255, 0.12);
+}
+
+.App.robotic-ui .robotic-crosshair {
+  border-color: rgba(0, 245, 255, 0.34);
+  box-shadow: 0 0 22px rgba(0, 245, 255, 0.12), inset 0 0 24px rgba(182, 92, 255, 0.08);
+}
+
+.App.robotic-ui .robotic-crosshair::before,
+.App.robotic-ui .robotic-crosshair::after {
+  background: rgba(0, 245, 255, 0.42);
+}
+
+.App.robotic-ui .robotic-corner {
+  border-color: rgba(255, 61, 242, 0.38);
+}
+
+.App.robotic-ui .orb-stage::before {
+  border-color: rgba(0, 245, 255, 0.22);
+  background:
+    repeating-conic-gradient(from 18deg, rgba(0, 245, 255, 0.14) 0deg 1deg, transparent 1deg 18deg),
+    radial-gradient(circle, transparent 0 61%, rgba(182, 92, 255, 0.1) 62% 63%, transparent 64%);
+}
+
+.App.robotic-ui .orb-stage::after {
+  border-color: rgba(255, 61, 242, 0.16);
+}
+
+.App.robotic-ui .voice-orb-shell {
+  filter: drop-shadow(0 0 42px rgba(0, 245, 255, 0.24)) drop-shadow(0 0 82px rgba(182, 92, 255, 0.13));
+}
+
+.App.robotic-ui .voice-orb-shell::before {
+  border-color: rgba(0, 245, 255, 0.3);
+  background:
+    conic-gradient(from 90deg, transparent 0 12%, rgba(0, 245, 255, 0.42) 12% 14%, transparent 14% 38%, rgba(255, 61, 242, 0.34) 38% 40%, transparent 40% 69%, rgba(0, 109, 255, 0.36) 69% 71%, transparent 71% 100%);
+}
+
+.App.robotic-ui .voice-orb-shell::after {
+  border-color: rgba(182, 92, 255, 0.24);
+}
+
+.App.robotic-ui .terminal-root,
+.App.robotic-ui .dashboard-panel,
+.App.robotic-ui .dashboard-hero,
+.App.robotic-ui .metric-card,
+.App.robotic-ui .settings-panel {
+  transform: none !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease, background 0.16s ease;
+}
+
+.App.robotic-ui .terminal-root:hover,
+.App.robotic-ui .dashboard-panel:hover,
+.App.robotic-ui .metric-card:hover,
+.App.robotic-ui .settings-panel:hover {
+  transform: none !important;
+  border-color: rgba(0, 245, 255, 0.46);
+  box-shadow:
+    0 0 0 1px rgba(0, 245, 255, 0.08),
+    0 18px 60px rgba(0, 0, 0, 0.52),
+    0 0 28px rgba(0, 245, 255, 0.13),
+    inset 0 0 42px rgba(182, 92, 255, 0.045);
+}
+
+/* Amber color restore: keep compact sizing, restore previous Jarvis palette. */
+.App.robotic-ui {
+  --jarvis-accent: #f59e0b;
+  --jarvis-accent-bright: #fbbf24;
+  --jarvis-accent-muted: #92400e;
+  --neon-cyan: #f59e0b;
+  --neon-blue: #92400e;
+  --neon-violet: #d97706;
+  --neon-pink: #fbbf24;
+  --neon-border: rgba(245, 158, 11, 0.28);
+  background:
+    radial-gradient(circle at 42% 48%, rgba(245, 158, 11, 0.13), transparent 28%),
+    radial-gradient(circle at 78% 22%, rgba(251, 191, 36, 0.07), transparent 26%),
+    linear-gradient(135deg, #0a0b0f 0%, #101218 46%, #07080c 100%);
+}
+
+.App.robotic-ui::before {
+  background:
+    linear-gradient(115deg, transparent 0 20%, rgba(245, 158, 11, 0.12) 20.15% 20.36%, transparent 20.6% 52%, rgba(146, 64, 14, 0.16) 52.2% 52.45%, transparent 52.7% 100%),
+    radial-gradient(circle at 42% 50%, rgba(245, 158, 11, 0.12), transparent 24%),
+    linear-gradient(90deg, rgba(10, 11, 15, 0.92) 0%, rgba(10, 11, 15, 0.18) 46%, rgba(10, 11, 15, 0.92) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.22) 42%, rgba(0, 0, 0, 0.76));
+}
+
+.App.robotic-ui::after {
+  background:
+    linear-gradient(rgba(245, 158, 11, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.032) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+}
+
+.App.robotic-ui .robotic-target-layer {
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(245, 158, 11, 0.1), transparent 13%),
+    linear-gradient(90deg, transparent 0 49.97%, rgba(245, 158, 11, 0.08) 49.99% 50.01%, transparent 50.03% 100%),
+    linear-gradient(0deg, transparent 0 49.97%, rgba(245, 158, 11, 0.06) 49.99% 50.01%, transparent 50.03% 100%);
+}
+
+.App.robotic-ui .robotic-target-layer::before,
+.App.robotic-ui .robotic-target-layer::after {
+  border-color: rgba(245, 158, 11, 0.12);
+}
+
+.App.robotic-ui .robotic-crosshair {
+  border-color: rgba(245, 158, 11, 0.34);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.12), inset 0 0 24px rgba(245, 158, 11, 0.07);
+}
+
+.App.robotic-ui .robotic-crosshair::before,
+.App.robotic-ui .robotic-crosshair::after {
+  background: rgba(245, 158, 11, 0.42);
+}
+
+.App.robotic-ui .robotic-corner,
+.App.robotic-ui .orb-stage::before {
+  border-color: rgba(251, 191, 36, 0.42);
+}
+
+.App.robotic-ui .orb-stage::before {
+  background:
+    repeating-conic-gradient(from 18deg, rgba(245, 158, 11, 0.13) 0deg 1deg, transparent 1deg 18deg),
+    radial-gradient(circle, transparent 0 61%, rgba(245, 158, 11, 0.09) 62% 63%, transparent 64%);
+}
+
+.App.robotic-ui .orb-stage::after {
+  border-color: rgba(251, 191, 36, 0.16);
+}
+
+.App.robotic-ui .voice-orb-shell {
+  filter: drop-shadow(0 0 44px rgba(245, 158, 11, 0.22)) drop-shadow(0 0 90px rgba(251, 191, 36, 0.1));
+}
+
+.App.robotic-ui .voice-orb-shell::before {
+  border-color: rgba(245, 158, 11, 0.28);
+  background:
+    conic-gradient(from 90deg, transparent 0 12%, rgba(245, 158, 11, 0.42) 12% 14%, transparent 14% 38%, rgba(251, 191, 36, 0.5) 38% 40%, transparent 40% 69%, rgba(245, 158, 11, 0.38) 69% 71%, transparent 71% 100%);
+}
+
+.App.robotic-ui .voice-orb-shell::after {
+  border-color: rgba(146, 64, 14, 0.28);
+}
+
+.App.robotic-ui button::before {
+  background:
+    linear-gradient(110deg, transparent 0 34%, rgba(255, 255, 255, 0.16) 46%, transparent 58%),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent 54%, rgba(251, 191, 36, 0.06));
+}
+
+.App.robotic-ui .terminal-root:hover,
+.App.robotic-ui .dashboard-panel:hover,
+.App.robotic-ui .metric-card:hover,
+.App.robotic-ui .settings-panel:hover {
+  border-color: rgba(245, 158, 11, 0.48);
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.08),
+    0 18px 60px rgba(0, 0, 0, 0.52),
+    0 0 28px rgba(245, 158, 11, 0.13),
+    inset 0 0 42px rgba(245, 158, 11, 0.045);
+}
+
+@media (max-width: 980px) {
+  .App.robotic-ui {
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+/* Home black-stage override */
+.App.robotic-ui,
+.App.robotic-ui.alt-mode {
+  background: #000 !important;
+}
+
+.App.robotic-ui::before,
+.App.robotic-ui::after {
+  background: none !important;
+  opacity: 0 !important;
+}
+
+.App.robotic-ui .robotic-target-layer {
+  display: none;
+}

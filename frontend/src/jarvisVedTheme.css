@@ -1,0 +1,470 @@
+:root {
+  --jarvis-bg-primary: #0a0b0f;
+  --jarvis-bg-secondary: #12141a;
+  --jarvis-bg-tertiary: #1a1d26;
+  --jarvis-bg-card: rgba(22, 25, 32, 0.84);
+  --jarvis-bg-hover: #1e222c;
+  --jarvis-accent: #f59e0b;
+  --jarvis-accent-bright: #fbbf24;
+  --jarvis-accent-muted: #92400e;
+  --jarvis-accent-glow: rgba(245, 158, 11, 0.16);
+  --jarvis-text: #f4f4f5;
+  --jarvis-text-secondary: #a1a1aa;
+  --jarvis-text-muted: #71717a;
+  --jarvis-border: #27272a;
+  --jarvis-success: #22c55e;
+  --jarvis-error: #ef4444;
+}
+
+.App.robotic-ui {
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(245, 158, 11, 0.13), transparent 16%),
+    radial-gradient(ellipse at 42% 52%, rgba(245, 158, 11, 0.11), transparent 31%),
+    radial-gradient(ellipse at 18% 24%, rgba(251, 191, 36, 0.08), transparent 34%),
+    linear-gradient(120deg, #050608 0%, #0a0b0f 44%, #111017 70%, #050506 100%);
+  color: var(--jarvis-text);
+}
+
+.App.alt-mode {
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(239, 68, 68, 0.12), transparent 16%),
+    radial-gradient(ellipse at 42% 52%, rgba(245, 158, 11, 0.13), transparent 31%),
+    linear-gradient(120deg, #050506 0%, #100b08 45%, #0a0b0f 100%);
+}
+
+.App::before {
+  background:
+    linear-gradient(115deg, transparent 0 19%, rgba(245, 158, 11, 0.12) 19.2% 19.45%, transparent 19.7% 48%, rgba(251, 191, 36, 0.08) 48.2% 48.45%, transparent 48.7% 100%),
+    radial-gradient(circle at 42% 50%, rgba(245, 158, 11, 0.18), transparent 23%),
+    linear-gradient(90deg, rgba(10, 11, 15, 0.94) 0%, rgba(10, 11, 15, 0.18) 48%, rgba(10, 11, 15, 0.95) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.24) 42%, rgba(0, 0, 0, 0.82));
+}
+
+.App::after {
+  opacity: 0.34;
+  background:
+    linear-gradient(rgba(245, 158, 11, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.035) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.032) 0 1px, transparent 1px 4px);
+}
+
+.robotic-target-layer {
+  background:
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(245, 158, 11, 0.15), transparent 12%),
+    linear-gradient(90deg, transparent 0 49.96%, rgba(245, 158, 11, 0.12) 49.98% 50.02%, transparent 50.04% 100%),
+    linear-gradient(0deg, transparent 0 49.96%, rgba(245, 158, 11, 0.09) 49.98% 50.02%, transparent 50.04% 100%);
+}
+
+.robotic-crosshair {
+  border-color: rgba(245, 158, 11, 0.42);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.16), inset 0 0 24px rgba(245, 158, 11, 0.08);
+}
+
+.robotic-crosshair::before,
+.robotic-crosshair::after {
+  background: rgba(251, 191, 36, 0.5);
+}
+
+.robotic-corner {
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.privacy-consent-panel,
+.auth-mainframe,
+.auth-circuit-panel,
+.dashboard-hero,
+.dashboard-panel,
+.metric-card,
+.hud-panel,
+.settings-panel,
+.nav-brand-hud {
+  background:
+    linear-gradient(145deg, rgba(10, 11, 15, 0.94), rgba(18, 20, 26, 0.82)),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.08), transparent 55%, rgba(251, 191, 36, 0.045));
+  border-color: rgba(245, 158, 11, 0.34);
+  border-radius: 12px;
+  clip-path: none;
+  box-shadow:
+    0 24px 90px rgba(0, 0, 0, 0.46),
+    0 0 0 1px rgba(245, 158, 11, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 0 54px rgba(245, 158, 11, 0.035);
+}
+
+.nav-brand-hud,
+.dashboard-hero h1,
+.auth-completion strong,
+.response-prefix,
+.split-hud .brand-diamond,
+.settings-header h3,
+.dash-kicker,
+.dashboard-panel-title {
+  color: var(--jarvis-accent-bright) !important;
+  text-shadow: 0 0 18px rgba(245, 158, 11, 0.42);
+}
+
+.nav-link-hud,
+.settings-readout,
+.placeholder-text,
+.metric-card span,
+.dashboard-row-main span,
+.assistant-item span {
+  color: var(--jarvis-text-secondary);
+}
+
+.nav-link-hud:hover,
+.nav-link-item-hud.active .nav-link-hud {
+  color: var(--jarvis-accent-bright);
+  text-shadow: 0 0 14px rgba(245, 158, 11, 0.52);
+}
+
+.nav-link-item-hud,
+.tab-btn,
+.tts-btn,
+.settings-action-btn,
+.dashboard-actions button,
+.dash-pill,
+.dash-delete,
+.start-mic-btn,
+.auth-mode-toggle button,
+.auth-primary {
+  clip-path: none;
+  border-radius: 8px;
+  border-color: rgba(245, 158, 11, 0.3);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(245, 158, 11, 0.055)), rgba(18, 20, 26, 0.72);
+  color: var(--jarvis-text);
+}
+
+.nav-link-item-hud:hover,
+.nav-link-item-hud.active,
+.tab-btn:hover,
+.tab-btn.active,
+.tts-btn:hover,
+.settings-action-btn:hover:not(:disabled),
+.dashboard-actions button:hover,
+.dash-pill:hover,
+.start-mic-btn:hover,
+.auth-mode-toggle button:hover,
+.auth-mode-toggle button.active,
+.auth-primary:hover {
+  border-color: var(--jarvis-accent);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.18), rgba(251, 191, 36, 0.08));
+  color: var(--jarvis-accent-bright);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.16), inset 0 0 20px rgba(245, 158, 11, 0.055);
+}
+
+.settings-panel {
+  width: 360px;
+  max-height: calc(100vh - 116px);
+  overflow-y: auto;
+}
+
+.setting-group,
+.dashboard-row,
+.assistant-item,
+.pane,
+.indicator,
+.score-badge,
+.slider-container {
+  border-color: rgba(245, 158, 11, 0.16);
+  background: rgba(18, 20, 26, 0.56);
+  border-radius: 8px;
+  clip-path: none;
+}
+
+.setting-group input[type="range"],
+.slider-container input[type=range] {
+  accent-color: var(--jarvis-accent);
+}
+
+.setting-group input[type="color"] {
+  border-radius: 8px;
+}
+
+.pane-label,
+.split-hud .pane-label {
+  color: var(--jarvis-accent-bright);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
+  border-bottom-color: rgba(245, 158, 11, 0.14);
+}
+
+.indicator.on,
+.indicator.thinking,
+.tts-speaking,
+.tab-btn.active,
+.start-mic-btn {
+  color: var(--jarvis-accent-bright) !important;
+}
+
+.indicator.on .indicator-dot,
+.indicator.thinking .indicator-dot {
+  box-shadow: 0 0 8px var(--jarvis-accent), 0 0 18px rgba(245, 158, 11, 0.62);
+}
+
+.voice-orb-shell {
+  filter: drop-shadow(0 0 44px rgba(245, 158, 11, 0.24)) drop-shadow(0 0 96px rgba(251, 191, 36, 0.12));
+}
+
+.App .orb-stage::before,
+.voice-orb-shell::before {
+  border-color: rgba(245, 158, 11, 0.34);
+  background:
+    repeating-conic-gradient(from 18deg, rgba(245, 158, 11, 0.16) 0deg 1deg, transparent 1deg 18deg),
+    radial-gradient(circle, transparent 0 61%, rgba(245, 158, 11, 0.11) 62% 63%, transparent 64%);
+}
+
+.App .orb-stage::after,
+.voice-orb-shell::after {
+  border-color: rgba(251, 191, 36, 0.2);
+}
+
+.auth-root {
+  background:
+    radial-gradient(circle at 22% 35%, rgba(245, 158, 11, 0.13), transparent 29%),
+    radial-gradient(circle at 78% 55%, rgba(251, 191, 36, 0.08), transparent 31%),
+    linear-gradient(180deg, rgba(10, 11, 15, 0.96), rgba(5, 6, 8, 0.98));
+}
+
+.auth-root::before,
+.auth-root::after {
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.86), rgba(251, 191, 36, 0.32), transparent);
+}
+
+.auth-form input,
+.auth-form textarea,
+.auth-form select {
+  border-color: rgba(245, 158, 11, 0.24);
+  border-radius: 8px;
+  background: rgba(18, 20, 26, 0.72);
+}
+
+.auth-form input:focus,
+.auth-form textarea:focus,
+.auth-form select:focus {
+  border-color: var(--jarvis-accent);
+  box-shadow: 0 0 0 3px var(--jarvis-accent-glow);
+}
+
+.auth-radar,
+.auth-gear,
+.auth-chip {
+  border-color: rgba(245, 158, 11, 0.36);
+  background:
+    repeating-conic-gradient(from 0deg, rgba(245, 158, 11, 0.28) 0 2deg, transparent 2deg 8deg),
+    radial-gradient(circle, transparent 0 28%, rgba(245, 158, 11, 0.08) 29% 31%, transparent 32% 100%);
+}
+
+.auth-spectrum span {
+  background: linear-gradient(180deg, var(--jarvis-accent-bright), var(--jarvis-accent-muted));
+}
+
+.dashboard-root {
+  inset: 104px 28px 28px;
+}
+
+.dashboard-grid,
+.dashboard-metrics {
+  gap: 12px;
+}
+
+.metric-card strong,
+.dashboard-response,
+.dashboard-row-main p,
+.assistant-item-text,
+.response-text,
+.speech-text,
+.history-text {
+  color: var(--jarvis-text);
+}
+
+.dashboard-row:hover,
+.history-entry:hover,
+.log-line:hover {
+  border-color: rgba(245, 158, 11, 0.34);
+  background: rgba(245, 158, 11, 0.055);
+}
+
+.jarvis-face-console {
+  position: fixed;
+  left: 32px;
+  top: 294px;
+  width: 210px;
+  z-index: 930;
+  pointer-events: auto;
+  padding: 12px;
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, rgba(10, 11, 15, 0.88), rgba(22, 25, 32, 0.74)),
+    radial-gradient(circle at 50% 42%, rgba(245, 158, 11, 0.12), transparent 62%);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42), inset 0 0 44px rgba(245, 158, 11, 0.04);
+  backdrop-filter: blur(16px) saturate(1.2);
+}
+
+.jarvis-face-console:hover {
+  border-color: rgba(251, 191, 36, 0.58);
+  box-shadow: 0 28px 92px rgba(0, 0, 0, 0.48), 0 0 34px rgba(245, 158, 11, 0.14), inset 0 0 54px rgba(245, 158, 11, 0.055);
+}
+
+.jarvis-face-header,
+.jarvis-face-readouts {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--jarvis-text-muted);
+}
+
+.jarvis-face-header strong {
+  color: var(--jarvis-accent-bright);
+}
+
+.jarvis-face-stage {
+  position: relative;
+  height: 188px;
+  display: grid;
+  place-items: center;
+  margin: 8px 0;
+  background:
+    linear-gradient(rgba(245, 158, 11, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.face-ring {
+  position: absolute;
+  width: 132px;
+  height: 166px;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  border-radius: 45% 45% 48% 48%;
+  opacity: 0;
+}
+
+.state-listening .face-ring,
+.state-speaking .face-ring,
+.state-locked .face-ring {
+  animation: face-ring 1.8s ease-out infinite;
+}
+
+.face-ring-two {
+  animation-delay: 0.55s !important;
+}
+
+.jarvis-face-svg {
+  position: relative;
+  width: 152px;
+  height: 168px;
+  overflow: visible;
+  animation: face-breathe 4s ease-in-out infinite;
+}
+
+.face-glow,
+.face-outline,
+.face-accent,
+.face-eye path,
+.face-mouth {
+  fill: none;
+  stroke: var(--jarvis-accent-bright);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.face-glow {
+  stroke-width: 4;
+  opacity: 0.22;
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.8));
+}
+
+.face-outline {
+  stroke-width: 1.6;
+}
+
+.face-node,
+.face-eye circle {
+  fill: var(--jarvis-accent-bright);
+  filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.8));
+}
+
+.face-eye path {
+  stroke-width: 1.7;
+}
+
+.face-eye circle {
+  animation: face-gaze 5.2s ease-in-out infinite;
+}
+
+.face-mouth {
+  stroke-width: 2.1;
+  animation: mouth-idle 3.4s ease-in-out infinite;
+}
+
+.state-thinking .face-eye circle {
+  fill: none;
+  stroke: var(--jarvis-accent-bright);
+  stroke-width: 2;
+  animation: thinking-spin 0.8s linear infinite;
+}
+
+.state-speaking .face-mouth {
+  animation: mouth-speaking 0.42s ease-in-out infinite;
+}
+
+.state-locked .face-glow,
+.state-locked .face-outline,
+.state-locked .face-accent,
+.state-locked .face-eye path,
+.state-locked .face-mouth {
+  stroke: var(--jarvis-error);
+}
+
+.state-locked .face-node,
+.state-locked .face-eye circle {
+  fill: var(--jarvis-error);
+}
+
+@keyframes face-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.018); }
+}
+
+@keyframes face-gaze {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(1.4px, -0.8px); }
+  64% { transform: translate(-1.2px, 0.7px); }
+}
+
+@keyframes mouth-idle {
+  0%, 100% { opacity: 0.76; }
+  50% { opacity: 1; }
+}
+
+@keyframes mouth-speaking {
+  0%, 100% { d: path("M34 66 C40 62, 45 70, 50 66 S60 62, 66 66"); }
+  50% { d: path("M34 66 C40 72, 44 57, 50 68 S60 76, 66 63"); }
+}
+
+@keyframes thinking-spin {
+  to { transform: rotate(360deg); transform-origin: center; }
+}
+
+@keyframes face-ring {
+  0% { transform: scale(0.82); opacity: 0; }
+  16% { opacity: 0.54; }
+  100% { transform: scale(1.28); opacity: 0; }
+}
+
+@media (max-width: 1180px) {
+  .jarvis-face-console {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .settings-panel {
+    max-height: calc(100vh - 140px);
+  }
+}
